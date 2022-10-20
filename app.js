@@ -28,12 +28,31 @@ const loadData = (url,page = 1) => {
 
 }
 
+const loadCharacterInfo = (url, id) =>{
 
-const navegacion = (e) => {
+    let urlCharacter = `${url}id`;
+    fetch(urlCharacter)
+        .then(respuesta => respuesta.json())
+        .then(personaje => {
+            //TODO: Implmentar modal con info del personaje
+            alert(personaje.name);
+        })
+}
+
+const showModal = (e) =>{
     e.preventDefault();
     if(e.target.classList.contains('btn')){
         let page = e.target.getAttribute('data-id');
         loadData(urlBase, page);
+    }
+}
+
+
+const navegacion = (e) => {
+     let page = e.target.getAttribute('data-id');
+        e.preventDefault();
+    if(e.target.classList.contains('btn')){
+       loadData(urlBase, page);
     }
 }
 
@@ -57,11 +76,11 @@ const creaCard = (personaje) => {
    const card = document.createElement('div');
     const html = `
     <div class="card m-3" style="width: 18rem; float: left;">
-    <img src="${personaje.image}" class="card-img-top" alt="...">
+    <img loading="lazy" src="${personaje.image}" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">${personaje.name}</h5>
       <p class="card-text">${personaje.status}</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <a href="#" class="btn btn-primary" data-id="${personaje.id}">Go somewhere</a>
     </div>
   </div>`;
   card.innerHTML = html;
@@ -71,18 +90,3 @@ const creaCard = (personaje) => {
 
 
 
-/*const creaButtons = () => {
-    const contenedorButtons = document.querySelector('#botones');
-    contenedorButtons.innerText = '';    
-    const btnPrev = document.createElement('button');
-    btnPrev.id = 'prev';
-    btnPrev.className = 'btn btn-success btn-lg  mx-3';
-    btnPrev.innerText = 'Anterior';
-    contenedorButtons.appendChild(btnPrev);
-    const btnNext = document.createElement('button');
-    btnNext.id = 'next';
-    btnNext.className = 'btn btn-success btn-lg mx-3';
-    btnNext.innerText = 'Siguiente';
-    contenedorButtons.appendChild(btnNext);
-}
-*/
