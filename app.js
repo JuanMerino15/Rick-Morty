@@ -36,6 +36,7 @@ const loadCharacterInfo = (url, id) =>{
         .then(respuesta => respuesta.json())
         .then(personaje => {
             //TODO: Implmentar modal con info del personaje
+            console.log(personaje);
             alert(personaje.name);
         });
 }
