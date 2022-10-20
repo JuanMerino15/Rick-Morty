@@ -7,8 +7,8 @@ const loadData = (url,page = 1) => {
 .then(respJson => {
     const info = respJson.info;
     const personajes = respJson.results;
-    console.log(info.next);
-    console.log(info.prev);
+    //console.log(info.next);
+    //console.log(info.prev);
     // creaButtons();
     if(!info.prev){
         document.querySelector('#prev').classList.add('disabled')
@@ -30,28 +30,32 @@ const loadData = (url,page = 1) => {
 
 const loadCharacterInfo = (url, id) =>{
 
-    let urlCharacter = `${url}id`;
+    let urlCharacter = `${url}${id}`;
+    console.log(urlCharacter)
     fetch(urlCharacter)
         .then(respuesta => respuesta.json())
         .then(personaje => {
             //TODO: Implmentar modal con info del personaje
             alert(personaje.name);
-        })
+        });
 }
 
-const showModal = (e) =>{
+const showModal = (e) => {
     e.preventDefault();
     if(e.target.classList.contains('btn')){
-        let page = e.target.getAttribute('data-id');
-        loadData(urlBase, page);
+        let id = e.target.getAttribute('data-id');
+        loadCharacterInfo(urlBase, id);
     }
 }
+
+document.querySelector('#respuesta').addEventListener('click', showModal);
 
 
 const navegacion = (e) => {
      let page = e.target.getAttribute('data-id');
         e.preventDefault();
     if(e.target.classList.contains('btn')){
+        let page = e.target.getAttribute('data-id')
        loadData(urlBase, page);
     }
 }
@@ -80,7 +84,7 @@ const creaCard = (personaje) => {
     <div class="card-body">
       <h5 class="card-title">${personaje.name}</h5>
       <p class="card-text">${personaje.status}</p>
-      <a href="#" class="btn btn-primary" data-id="${personaje.id}">Go somewhere</a>
+      <button class="btn btn-primary btn-block" data-id="${personaje.id}">Go somewhere</button>
     </div>
   </div>`;
   card.innerHTML = html;
